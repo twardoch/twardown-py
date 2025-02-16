@@ -27,12 +27,12 @@ jobs:
         
     - name: Set up virtual environment
       run: |
-        ~/.cargo/bin/uv venv
+        uv venv
         source .venv/bin/activate
         
     - name: Install dependencies
       run: |
-        ~/.cargo/bin/uv pip install -e ".[dev]"
+        uv pip install -e ".[dev]"
         
     - name: Run tests
       run: |
@@ -62,12 +62,12 @@ jobs:
         
     - name: Set up virtual environment
       run: |
-        ~/.cargo/bin/uv venv
+        uv venv
         source .venv/bin/activate
         
     - name: Install dependencies
       run: |
-        ~/.cargo/bin/uv pip install ruff mypy types-markdown
+        uv pip install ruff mypy types-markdown
         
     - name: Run linting
       run: |
