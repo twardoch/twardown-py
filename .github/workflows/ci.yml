@@ -25,12 +25,18 @@ jobs:
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         
+    - name: Set up virtual environment
+      run: |
+        ~/.cargo/bin/uv venv
+        source .venv/bin/activate
+        
     - name: Install dependencies
       run: |
-        uv pip install -e ".[dev]"
+        ~/.cargo/bin/uv pip install -e ".[dev]"
         
     - name: Run tests
       run: |
+        source .venv/bin/activate
         python -m pytest --cov=twardown_py tests/
         
     - name: Upload coverage
@@ -54,12 +60,18 @@ jobs:
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         
+    - name: Set up virtual environment
+      run: |
+        ~/.cargo/bin/uv venv
+        source .venv/bin/activate
+        
     - name: Install dependencies
       run: |
-        uv pip install ruff mypy
+        ~/.cargo/bin/uv pip install ruff mypy types-markdown
         
     - name: Run linting
       run: |
+        source .venv/bin/activate
         ruff check .
         ruff format --check .
         mypy src/twardown_py 
