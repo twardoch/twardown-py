@@ -12,10 +12,19 @@ license = "MIT"
 authors = [
     { name = "Adam Twardoch", email = "adam@twardoch.com" },
 ]
+dependencies = [
+    "markdown>=3.5.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/twardoch/twardown-py"
 Repository = "https://github.com/twardoch/twardown-py.git"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/twardown_py"]
