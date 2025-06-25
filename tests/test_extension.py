@@ -2,7 +2,6 @@
 """Tests for the Twardown Markdown extension."""
 
 from markdown import Markdown
-
 from twardown_py import makeExtension
 
 

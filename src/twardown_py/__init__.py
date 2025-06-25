@@ -26,7 +26,7 @@ class MagicRecordPreprocessor(Preprocessor):
         super().__init__(md)
         self.filename = filename
 
-    def run(self, lines: List[str]) -> List[str]:
+    def run(self, lines: list[str]) -> list[str]:
         """Process the document and add magic record if needed."""
         # Skip if no lines
         if not lines:
@@ -59,7 +59,7 @@ class TaskListProcessor(BlockProcessor):
         """Test if the block is a task list item."""
         return block.strip().startswith("- [ ]") or block.strip().startswith("- [x]")
 
-    def run(self, parent: ElementTree.Element, blocks: List[str]) -> None:
+    def run(self, parent: ElementTree.Element, blocks: list[str]) -> None:
         """Process task list items."""
         block = blocks.pop(0)
         ul = ElementTree.SubElement(parent, "ul", {"class": "task-list"})
@@ -122,7 +122,7 @@ class TwardownExtension(Extension):
         md.registerExtension(self)
 
         # Create and register core extensions if enabled
-        extensions: List[Extension] = []
+        extensions: list[Extension] = []
         if self.getConfig("enable_meta"):
             meta_ext = MetaExtension()
             meta_ext.md = md  # Set the Markdown instance on the MetaExtension
