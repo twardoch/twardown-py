@@ -1,8 +1,18 @@
 """Twardown Markdown extension for Python-Markdown."""
 
-__version__ = "0.1.0"
-
 # this_file: twardown-py/src/twardown_py/__init__.py
+
+try:
+    from importlib.metadata import version
+except ImportError:
+    # Python < 3.8
+    from importlib_metadata import version
+
+try:
+    __version__ = version("twardown_py")
+except Exception:
+    # Fallback version for development
+    __version__ = "0.0.0+dev"
 
 from typing import Any, List
 from xml.etree import ElementTree

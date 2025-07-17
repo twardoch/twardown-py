@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
 name = "twardown_py"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Python plugin for the Python Markdown ecosystem that provides an opinionated Markdown flavor"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -14,6 +14,7 @@ authors = [
 ]
 dependencies = [
     "markdown>=3.5.0",
+    "importlib-metadata>=1.0; python_version<'3.8'",
 ]
 
 [project.urls]
@@ -28,6 +29,9 @@ dev = [
     "mypy>=1.9.0",
     "types-markdown>=3.5.0",
 ]
+
+[tool.hatch.version]
+source = "vcs"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/twardown_py"]
