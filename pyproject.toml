@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
 name = "twardown_py"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Python plugin for the Python Markdown ecosystem that provides an opinionated Markdown flavor"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -14,6 +14,7 @@ authors = [
 ]
 dependencies = [
     "markdown>=3.5.0",
+    "importlib-metadata>=1.0; python_version<'3.8'",
 ]
 
 [project.urls]
@@ -27,7 +28,12 @@ dev = [
     "ruff>=0.3.0",
     "mypy>=1.9.0",
     "types-markdown>=3.5.0",
+    "build>=0.10.0",
+    "twine>=4.0.0",
 ]
+
+[tool.hatch.version]
+source = "vcs"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/twardown_py"]
@@ -49,7 +55,7 @@ indent-style = "space"
 line-ending = "lf"
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -61,3 +67,4 @@ warn_redundant_casts = true
 warn_unused_ignores = true
 warn_no_return = true
 warn_unreachable = true
+ignore_missing_imports = true

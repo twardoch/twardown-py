@@ -1,10 +1,20 @@
 """Twardown Markdown extension for Python-Markdown."""
 
-__version__ = "0.1.0"
-
 # this_file: twardown-py/src/twardown_py/__init__.py
 
-from typing import Any, List
+try:
+    from importlib.metadata import version as _version
+except ImportError:
+    # Python < 3.8
+    from importlib_metadata import version as _version  # type: ignore
+
+try:
+    __version__ = _version("twardown_py")
+except Exception:
+    # Fallback version for development
+    __version__ = "0.0.0+dev"
+
+from typing import Any
 from xml.etree import ElementTree
 
 from markdown import Markdown
@@ -118,29 +128,22 @@ class TwardownExtension(Extension):
         Args:
             md: The Markdown instance to extend.
         """
-        # Register this extension first
-        md.registerExtension(self)
-
         # Create and register core extensions if enabled
-        extensions: list[Extension] = []
         if self.getConfig("enable_meta"):
             meta_ext = MetaExtension()
-            meta_ext.md = md  # Set the Markdown instance on the MetaExtension
-            md.registerExtension(meta_ext)
-            md.Meta = {}  # type: ignore # Initialize Meta attribute directly
-            extensions.append(meta_ext)
+            meta_ext.extendMarkdown(md)
         if self.getConfig("enable_tables"):
-            extensions.append(TableExtension())
+            table_ext = TableExtension()
+            table_ext.extendMarkdown(md)
         if self.getConfig("enable_fenced_code"):
-            extensions.append(FencedCodeExtension())
+            fenced_ext = FencedCodeExtension()
+            fenced_ext.extendMarkdown(md)
         if self.getConfig("enable_code_highlighting"):
-            extensions.append(CodeHiliteExtension())
+            codehilite_ext = CodeHiliteExtension()
+            codehilite_ext.extendMarkdown(md)
         if self.getConfig("enable_toc"):
-            extensions.append(TocExtension())
-
-        # Register all extensions
-        for ext in extensions:
-            md.registerExtension(ext)
+            toc_ext = TocExtension()
+            toc_ext.extendMarkdown(md)
 
         # Register custom processors
         if self.getConfig("enable_magic_records"):
