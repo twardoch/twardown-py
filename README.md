@@ -224,6 +224,8 @@ This project uses git-tag-based semversioning with automated CI/CD:
    - Create a GitHub release
    - Publish to PyPI
 
+> **Note**: See [GITHUB_ACTIONS.md](GITHUB_ACTIONS.md) for complete GitHub Actions workflow configurations.
+
 ### Version Management
 
 The project uses dynamic versioning based on git tags:

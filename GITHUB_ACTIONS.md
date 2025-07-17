@@ -1,4 +1,64 @@
-# this_file: .github/workflows/release.yml
+# GitHub Actions Configuration
+
+Due to permission constraints, the GitHub Actions workflow files need to be manually created in the repository. Below are the complete workflow configurations for CI/CD:
+
+## Test Workflow
+
+Create `.github/workflows/test.yml`:
+
+```yaml
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+    
+    - name: Run tests
+      run: |
+        python -m pytest tests/ -v --cov=twardown_py --cov-report=xml --cov-report=term-missing
+    
+    - name: Run code quality checks
+      run: |
+        python -m ruff check src tests
+        python -m mypy src
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+      with:
+        file: ./coverage.xml
+        fail_ci_if_error: true
+        token: ${{ secrets.CODECOV_TOKEN }}
+```
+
+## Release Workflow
+
+Create `.github/workflows/release.yml`:
+
+```yaml
 name: Release
 
 on:
@@ -115,3 +175,20 @@ jobs:
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
+```
+
+## Setup Instructions
+
+1. Create the `.github/workflows/` directory in your repository
+2. Add the above workflow files
+3. Configure the following secrets in your GitHub repository:
+   - `PYPI_API_TOKEN`: PyPI API token for publishing
+   - `CODECOV_TOKEN`: (optional) Codecov token for coverage reporting
+
+## Features
+
+- **Automated Testing**: Runs tests on multiple Python versions and platforms
+- **Release Automation**: Creates releases and publishes to PyPI on git tag push
+- **Quality Checks**: Runs linting, formatting, and type checking
+- **Artifact Generation**: Creates wheel and source distributions
+- **Coverage Reporting**: Uploads coverage reports to Codecov
