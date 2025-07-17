@@ -166,40 +166,70 @@ Contributions are welcome! Please feel free to submit a Pull Request.
     # uv pip install -e ".[dev]"
     ```
 
-### Testing
+### Development Scripts
 
-Run tests using `pytest`:
+The project includes convenient scripts for common development tasks:
 
+#### Testing
 ```bash
-python -m pytest
+./scripts/test.sh          # Run comprehensive tests with coverage
 ```
 
-To include coverage reports:
-
+#### Code Quality
 ```bash
-python -m pytest --cov=twardown_py
-```
-This will also generate an XML coverage report (`coverage.xml`).
-
-### Code Quality Checks
-
-Run type checking with `mypy`:
-
-```bash
-python -m mypy src
+./scripts/quality.sh       # Run linting, formatting, and type checking
 ```
 
-Run linting with `Ruff`:
-
+#### Building
 ```bash
-python -m ruff check src tests
+./scripts/build.sh         # Run full build process with validation
 ```
 
-Format code with `Ruff`:
-
+#### Releasing
 ```bash
-python -m ruff format src tests
+./scripts/release.sh 1.0.0 # Create and push a new release tag
 ```
+
+### Manual Commands
+
+If you prefer to run commands manually:
+
+#### Testing
+```bash
+python -m pytest tests/ -v --cov=twardown_py --cov-report=term-missing
+```
+
+#### Code Quality Checks
+```bash
+python -m ruff check src tests      # Linting
+python -m ruff format src tests     # Formatting
+python -m mypy src                  # Type checking
+```
+
+#### Building
+```bash
+python -m build                     # Build package
+python -m twine check dist/*        # Validate package
+```
+
+### Release Process
+
+This project uses git-tag-based semversioning with automated CI/CD:
+
+1. **Local Development**: Make changes and test locally using the scripts above
+2. **Create Release**: Use `./scripts/release.sh X.Y.Z` to create a new release
+3. **Automated CI**: GitHub Actions will automatically:
+   - Run tests on multiple Python versions and platforms
+   - Build the package
+   - Create a GitHub release
+   - Publish to PyPI
+
+### Version Management
+
+The project uses dynamic versioning based on git tags:
+- Development versions: `0.1.1.dev1+gc61c679.d20250717`
+- Release versions: `1.0.0` (from git tag `v1.0.0`)
+- Pre-release versions: `1.0.0a1` (from git tag `v1.0.0-alpha.1`)
 
 ## License
 
