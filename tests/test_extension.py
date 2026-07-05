@@ -1,4 +1,4 @@
-# this_file: twardown-py/tests/test_extension.py
+# this_file: tests/test_extension.py
 """Tests for the Twardown Markdown extension."""
 
 from markdown import Markdown
@@ -19,9 +19,9 @@ def test_markdown_registration():
     extension = makeExtension()
     extension.extendMarkdown(md)
     # Check that the extension has been properly configured
-    assert hasattr(md, 'preprocessors')
-    assert hasattr(md, 'parser')
-    assert hasattr(md.parser, 'blockprocessors')
+    assert hasattr(md, "preprocessors")
+    assert hasattr(md, "parser")
+    assert hasattr(md.parser, "blockprocessors")
 
 
 def test_extension_with_config():
@@ -43,14 +43,15 @@ def test_extension_with_config():
 
 def test_magic_record_preprocessor():
     """Test that magic records are added correctly."""
-    md = Markdown(extensions=[makeExtension(
-        filename="test.md", enable_toc=False, enable_meta=True)])
+    md = Markdown(
+        extensions=[makeExtension(filename="test.md", enable_toc=False, enable_meta=True)]
+    )
     text = "# Test\n\nSome content"
     md.convert(text)
     # Magic records should be in metadata, not in HTML
-    assert hasattr(md, 'Meta')
-    assert 'this_file' in md.Meta
-    assert md.Meta['this_file'] == ['test.md']
+    assert hasattr(md, "Meta")
+    assert "this_file" in md.Meta
+    assert md.Meta["this_file"] == ["test.md"]
 
 
 def test_magic_record_preprocessor_with_existing_frontmatter():
@@ -74,8 +75,9 @@ def test_magic_record_preprocessor_with_existing_this_file():
 
 def test_magic_record_preprocessor_disabled():
     """Test that magic records are not added when disabled."""
-    md = Markdown(extensions=[makeExtension(
-        filename="test.md", enable_magic_records=False, enable_toc=False)])
+    md = Markdown(
+        extensions=[makeExtension(filename="test.md", enable_magic_records=False, enable_toc=False)]
+    )
     text = "# Test\n\nSome content"
     html = md.convert(text)
     assert "this_file: test.md" not in html
@@ -121,8 +123,9 @@ def test_task_list_processor_disabled():
 
 def test_tables_enabled():
     """Test that tables work when enabled."""
-    md = Markdown(extensions=[makeExtension(
-        enable_tables=True, enable_toc=False, enable_magic_records=False)])
+    md = Markdown(
+        extensions=[makeExtension(enable_tables=True, enable_toc=False, enable_magic_records=False)]
+    )
     text = "| Header 1 | Header 2 |\n|----------|----------|\n| Cell 1   | Cell 2   |"
     html = md.convert(text)
     assert "<table>" in html
@@ -132,8 +135,11 @@ def test_tables_enabled():
 
 def test_tables_disabled():
     """Test that tables don't work when disabled."""
-    md = Markdown(extensions=[makeExtension(
-        enable_tables=False, enable_toc=False, enable_magic_records=False)])
+    md = Markdown(
+        extensions=[
+            makeExtension(enable_tables=False, enable_toc=False, enable_magic_records=False)
+        ]
+    )
     text = "| Header 1 | Header 2 |\n|----------|----------|\n| Cell 1   | Cell 2   |"
     html = md.convert(text)
     assert "<table>" not in html
@@ -141,8 +147,11 @@ def test_tables_disabled():
 
 def test_fenced_code_enabled():
     """Test that fenced code blocks work when enabled."""
-    md = Markdown(extensions=[makeExtension(
-        enable_fenced_code=True, enable_toc=False, enable_magic_records=False)])
+    md = Markdown(
+        extensions=[
+            makeExtension(enable_fenced_code=True, enable_toc=False, enable_magic_records=False)
+        ]
+    )
     text = "```python\nprint('hello')\n```"
     html = md.convert(text)
     assert "<pre>" in html
@@ -151,8 +160,11 @@ def test_fenced_code_enabled():
 
 def test_fenced_code_disabled():
     """Test that fenced code blocks don't work when disabled."""
-    md = Markdown(extensions=[makeExtension(
-        enable_fenced_code=False, enable_toc=False, enable_magic_records=False)])
+    md = Markdown(
+        extensions=[
+            makeExtension(enable_fenced_code=False, enable_toc=False, enable_magic_records=False)
+        ]
+    )
     text = "```python\nprint('hello')\n```"
     html = md.convert(text)
     # Should not be processed as fenced code block (no <pre> tag)
@@ -163,19 +175,21 @@ def test_fenced_code_disabled():
 
 def test_meta_enabled():
     """Test that metadata works when enabled."""
-    md = Markdown(extensions=[makeExtension(
-        enable_meta=True, enable_toc=False, enable_magic_records=False)])
+    md = Markdown(
+        extensions=[makeExtension(enable_meta=True, enable_toc=False, enable_magic_records=False)]
+    )
     text = "---\ntitle: Test Document\nauthor: Test Author\n---\n\n# Content"
     md.convert(text)
-    assert hasattr(md, 'Meta')
-    assert 'title' in md.Meta
-    assert md.Meta['title'] == ['Test Document']
+    assert hasattr(md, "Meta")
+    assert "title" in md.Meta
+    assert md.Meta["title"] == ["Test Document"]
 
 
 def test_meta_disabled():
     """Test that metadata doesn't work when disabled."""
-    md = Markdown(extensions=[makeExtension(
-        enable_meta=False, enable_toc=False, enable_magic_records=False)])
+    md = Markdown(
+        extensions=[makeExtension(enable_meta=False, enable_toc=False, enable_magic_records=False)]
+    )
     text = "---\ntitle: Test Document\nauthor: Test Author\n---\n\n# Content"
     html = md.convert(text)
     # Metadata should not be processed
@@ -192,15 +206,19 @@ def test_empty_input():
 
 def test_all_features_enabled():
     """Test that all features work together."""
-    md = Markdown(extensions=[makeExtension(
-        filename="test.md",
-        enable_tables=True,
-        enable_fenced_code=True,
-        enable_meta=True,
-        enable_task_lists=True,
-        enable_magic_records=True,
-        enable_toc=False
-    )])
+    md = Markdown(
+        extensions=[
+            makeExtension(
+                filename="test.md",
+                enable_tables=True,
+                enable_fenced_code=True,
+                enable_meta=True,
+                enable_task_lists=True,
+                enable_magic_records=True,
+                enable_toc=False,
+            )
+        ]
+    )
     text = """# Test Document
 
 - [ ] Task 1
@@ -220,14 +238,15 @@ print('hello')
     assert "<pre>" in html
     assert "<table>" in html
     # Magic records should be in metadata
-    assert hasattr(md, 'Meta')
-    assert 'this_file' in md.Meta
-    assert md.Meta['this_file'] == ['test.md']
+    assert hasattr(md, "Meta")
+    assert "this_file" in md.Meta
+    assert md.Meta["this_file"] == ["test.md"]
 
 
 def test_version_import():
     """Test that version can be imported."""
     from twardown_py import __version__  # noqa: PLC0415
+
     assert __version__ is not None
     assert isinstance(__version__, str)
     assert len(__version__) > 0

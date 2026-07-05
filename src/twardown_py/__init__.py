@@ -1,17 +1,13 @@
 """Twardown Markdown extension for Python-Markdown."""
 
-# this_file: twardown-py/src/twardown_py/__init__.py
+# this_file: src/twardown_py/__init__.py
 
-try:
-    from importlib.metadata import version as _version
-except ImportError:
-    # Python < 3.8
-    from importlib_metadata import version as _version  # type: ignore
+from importlib.metadata import version as _version
 
 try:
     __version__ = _version("twardown_py")
 except Exception:
-    # Fallback version for development
+    # Package not installed (e.g. running from a source checkout without a build).
     __version__ = "0.0.0+dev"
 
 from typing import Any

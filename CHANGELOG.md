@@ -8,17 +8,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Git-tag-based semversioning with hatch-vcs
-- Comprehensive test suite with 94% coverage
-- Build and release scripts in `scripts/` directory
-- GitHub Actions CI/CD pipeline for testing and releasing
-- Multiplatform support (Linux, Windows, macOS)
-- Python 3.8-3.12 support
+- Real GitHub Actions workflows: `ci.yml` (lint, type-check, test across Python
+  3.10–3.13 on Linux/Windows/macOS) and `release.yml` (build, GitHub release,
+  and PyPI trusted publishing on `v*` tags).
+- Jekyll + Just the Docs documentation under `docs/` (home and usage pages),
+  cross-linked to the twardown flavor spec (twardown-docs) and twardown-js.
+- Render-fixture conformance tests pinning the flavor's expected HTML output.
+- Project icon at `docs/assets/icon.png`.
+- PyPI metadata: keywords and trove classifiers.
 
 ### Changed
-- Dynamic version detection from git tags
-- Improved code quality with ruff and mypy
-- Enhanced documentation and developer experience
+- Raised the minimum Python to 3.10. The code already used PEP 585 builtin
+  generics (`list[str]`), which never ran on the previously declared 3.8, so the
+  floor now matches reality.
+- Dropped the unused `importlib-metadata` backport dependency and its dead
+  pre-3.8 import fallback; `importlib.metadata` is standard library on all
+  supported versions.
+
+### Removed
+- `GITHUB_ACTIONS.md` — superseded by the actual workflow files.
 
 ## [0.1.0] - 2025-01-17
 

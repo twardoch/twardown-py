@@ -24,6 +24,20 @@ wheels/
 venv/
 ENV/
 
+# Test / coverage / type-check caches
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# uv lockfile (library — not pinned)
+uv.lock
+
+# Misc build logs
+*.log
+
 # IDE
 .idea/
 .vscode/

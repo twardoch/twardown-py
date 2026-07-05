@@ -1,8 +1,11 @@
 ---
-this_file: twardown-py/README.md
+this_file: README.md
 ---
 
 # twardown-py: An Opinionated Python Markdown Extension
+
+<img src="docs/assets/icon.png" alt="twardown-py" width="200" align="right">
+
 
 **twardown-py** is a Python package that extends the functionality of the standard `Python-Markdown` library. It implements the "Twardown flavor," an opinionated set of enhancements and features designed to streamline Markdown processing for specific workflows, particularly those requiring file path tracking and GitHub Flavored Markdown (GFM) compatibility.
 
@@ -33,6 +36,8 @@ If you are using `uv`:
 ```bash
 uv pip install twardown-py
 ```
+
+Requires Python 3.10 or newer and `markdown>=3.5`.
 
 ## Usage
 
@@ -224,7 +229,7 @@ This project uses git-tag-based semversioning with automated CI/CD:
    - Create a GitHub release
    - Publish to PyPI
 
-> **Note**: See [GITHUB_ACTIONS.md](GITHUB_ACTIONS.md) for complete GitHub Actions workflow configurations.
+> **Note**: The workflows live in [`.github/workflows/`](.github/workflows/): `ci.yml` runs lint, type checks, and tests; `release.yml` builds and publishes on `v*` tags.
 
 ### Version Management
 

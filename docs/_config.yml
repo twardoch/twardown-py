@@ -1,0 +1,15 @@
+title: twardown-py
+description: A Python-Markdown extension that already made all the choices for you.
+remote_theme: just-the-docs/just-the-docs
+url: https://twardoch.github.io
+baseurl: /twardown-py
+
+aux_links:
+  GitHub: https://github.com/twardoch/twardown-py
+  PyPI: https://pypi.org/project/twardown-py/
+
+color_scheme: light
+search_enabled: true
+
+plugins:
+  - jekyll-remote-theme
