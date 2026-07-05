@@ -51,6 +51,11 @@ source = "vcs"
 [tool.hatch.build.targets.wheel]
 packages = ["src/twardown_py"]
 
+[tool.hatch.envs.hatch-test]
+extra-dependencies = [
+    "pytest-cov>=4.0.0",
+]
+
 [tool.pytest.ini_options]
 addopts = "-ra -q --cov=twardown_py --cov-report=xml"
 testpaths = ["tests"]

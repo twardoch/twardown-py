@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- The `hatch-test` environment now includes `pytest-cov`, so the canonical
+  `uvx hatch test` run no longer fails with `unrecognized arguments: --cov`
+  (coverage `addopts` require the plugin to be present in the test env).
+
 ### Added
 - Real GitHub Actions workflows: `ci.yml` (lint, type-check, test across Python
   3.10–3.13 on Linux/Windows/macOS) and `release.yml` (build, GitHub release,
